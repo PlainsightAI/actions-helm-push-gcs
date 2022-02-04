@@ -18,6 +18,7 @@ apt-get update -y && apt-get install -y google-cloud-sdk
 # Login to Google SDK
 echo "$3" | base64 -d >> "$(pwd)/credentials.json"
 ACCOUNT=$(jq '.client_email' $(pwd)/credentials.json)
+echo $ACCOUNT
 gcloud auth activate-service-account "$ACCOUNT" --key-file="$(pwd)/credentials.json" --project="$4"
 
 # Package Chart
