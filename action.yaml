@@ -1,0 +1,23 @@
+name: 'Helm Push to GCS'
+description: 'Push a Helm Chart to GCS'
+inputs:
+  chart-path:
+    description: 'The path to the helm chart'
+    required: true
+  gcs-bucket:
+    description: 'The name of the bucket to push to'
+    required: true
+  google-credentials:
+    description: 'Base64 encoded google credentials.json file'
+    required: true
+outputs:
+  output:
+    description: 'The command output'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.chart-path }}
+    - ${{ inputs.gcs-bucket }}
+    - ${{ inputs.google-credentials }}
+    - ${{ inputs.google-project }}
