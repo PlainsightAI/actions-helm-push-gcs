@@ -17,9 +17,7 @@ apt-get update -y && apt-get install -y google-cloud-sdk
 
 # Login to Google SDK
 echo "$3" | base64 -d >> "$(pwd)/credentials.json"
-ACCOUNT=$(jq '.client_email' $(pwd)/credentials.json)
-echo $ACCOUNT
-gcloud auth activate-service-account "$ACCOUNT" --key-file="$(pwd)/credentials.json" --project="$4"
+gcloud auth activate-service-account --key-file="$(pwd)/credentials.json" --project="$4"
 
 # Package Chart
 if [ -d "chart-out" ]; then
@@ -34,10 +32,10 @@ gsutil cp "chart-out/*" "$2"
 
 # Reindex and Push Index
 if [ -d "bucket-contents" ]; then
-  gsutil cp "$2" "bucket-contents/"
+  gsutil cp -r "$2" "bucket-contents/"
 else
   mkdir "bucket-contents"
-  gsutil cp "$2" "bucket-contents/"
+  gsutil cp -r "$2" "bucket-contents/"
 fi
 /usr/local/bin/helm repo index "bucket-contents"
 gsutil cp "bucket-contents/index.yaml" "$2"
