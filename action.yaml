@@ -20,4 +20,3 @@ runs:
     - ${{ inputs.chart-path }}
     - ${{ inputs.gcs-bucket }}
     - ${{ inputs.google-credentials }}
-    - ${{ inputs.google-project }}
