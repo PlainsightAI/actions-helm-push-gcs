@@ -27,8 +27,8 @@ else
   /usr/local/bin/helm package "$1" --destination "chart-out"
 fi
 
-URL=""
 # Parse URL
+URL=""
 if ![["$4" == "" ]]; then
   URL="$4"
 else
@@ -41,10 +41,10 @@ gsutil cp "chart-out/*" "$2"
 
 # Reindex and Push Index
 if [ -d "bucket-contents" ]; then
-  gsutil cp -r "$2" "bucket-contents/" --url "$URL"
+  gsutil cp -r "$2" "bucket-contents/"
 else
   mkdir "bucket-contents"
   gsutil cp -r "$2" "bucket-contents/"
 fi
-/usr/local/bin/helm repo index "bucket-contents"
+/usr/local/bin/helm repo index "bucket-contents" --url "$URL"
 gsutil cp "bucket-contents/index.yaml" "$2"
