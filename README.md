@@ -1,22 +1,24 @@
-# Helm Push to Artifactory Github Action
+# Helm Push to GCS Github Action
 
 ## Inputs
 
 ### chart-path
 
-**Required** - The path to the helm chart to push
+**Required** - The relative path to the helm chart to push
 
-### local-artifactory-repository
+*Example* - `deployments/my-super-awesome-chart`
 
-**Required** - The url of the helm-local artifactory repository to push to
+### gcs-bucket
 
-### artifactory-username
+**Required** - The GCS bucket (and optional sub-path) to push to
 
-**Required** - Your artifactory username
+*Example* - `gs://charts.mysuperawesomeproject.io/stable/thing`
 
-### artifactory-api-key
+### google-credentials
 
-**Required** - Your artifactory API KEY or password
+**Required** - You Google GCP credentials.json file that allows access to the specified bucket
+
+*Example* - `Yeah, i'm not putting an example creds.json here`
 
 ## Outputs
 
@@ -30,7 +32,6 @@ The command output
 uses: sixgill/actions-helm-push-artifactory
 with:
   chart-path: deployments/my-super-awesome-chart
-  local-artifactory-repository: https://plainsight.jfrog.io/artifactory/helm-local
-  artifactory-username: ${{ secrets.MY_USERNAME }}
-  artifactory-api-key: ${{ secrets.MY_API_KEY }}
+  gcs-bucket: gs://charts.plainsight.ai/testing/edge
+  google-credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
 ```
