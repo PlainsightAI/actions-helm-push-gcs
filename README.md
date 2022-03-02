@@ -16,9 +16,15 @@
 
 ### google-credentials
 
-**Required** - You Google GCP credentials.json file that allows access to the specified bucket
+**Required** - Your Google GCP credentials.json file that allows access to the specified bucket
 
-*Example* - `Yeah, i'm not putting an example creds.json here`
+*Example* - `Yeah, i'm not putting an example b64 creds.json here`
+
+### chart-url
+
+The URL to assign to the chart in question.
+
+*Example* - `https://charts.mysuperawesomeproject.io/stable/thing`
 
 ## Outputs
 
@@ -32,6 +38,7 @@ The command output
 uses: sixgill/actions-helm-push-artifactory
 with:
   chart-path: deployments/my-super-awesome-chart
+  chart-url: https://charts.plainsight.ai
   gcs-bucket: gs://charts.plainsight.ai/testing/edge
   google-credentials: ${{ secrets.GOOGLE_CREDENTIALS }}
 ```

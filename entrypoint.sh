@@ -27,6 +27,15 @@ else
   /usr/local/bin/helm package "$1" --destination "chart-out"
 fi
 
+# Parse URL
+URL=""
+if ![["$4" == "" ]]; then
+  URL="$4"
+else
+  noscheme=$(echo "%2" | sed 's/gs:\/\///')
+  URL="https://storage.googleapis.com/$noscheme"
+fi
+
 # Push to GCR
 gsutil cp "chart-out/*" "$2"
 
@@ -37,11 +46,5 @@ else
   mkdir "bucket-contents"
   gsutil cp -r "$2" "bucket-contents/"
 fi
-/usr/local/bin/helm repo index "bucket-contents"
+/usr/local/bin/helm repo index "bucket-contents" --url "$URL"
 gsutil cp "bucket-contents/index.yaml" "$2"
-
-# Push
-#output=$(/usr/local/bin/helm push-artifactory "$1" artifactory --skip-reindex 2>&1)
-
-# Set Output
-#echo "::set-output name=output::$output"

@@ -2,11 +2,14 @@ name: 'Helm Push to GCS'
 description: 'Push a Helm Chart to GCS'
 inputs:
   chart-path:
-    description: 'The path to the helm chart'
+    description: 'The relative path to the helm chart to package and push.'
     required: true
   gcs-bucket:
-    description: 'The name of the bucket to push to'
+    description: 'The (gs://) name of the GCS bucket to push to.'
     required: true
+  chart-url:
+    description: 'The URL of the chart. If unset, this will infer the url from the bucket name.'
+    required: false
   google-credentials:
     description: 'Base64 encoded google credentials.json file'
     required: true
@@ -20,3 +23,4 @@ runs:
     - ${{ inputs.chart-path }}
     - ${{ inputs.gcs-bucket }}
     - ${{ inputs.google-credentials }}
+    - ${{ inputs.chart-url }}
